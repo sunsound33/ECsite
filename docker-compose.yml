@@ -3,8 +3,26 @@ volumes:
   php-fpm-socket:
   db-store:
   psysh-store:
+
 services:
-  app:
+  next:
+    build:
+      context: .
+      dockerfile: ./docker/node/Dockerfile
+    volumes:
+    - type: bind
+      source: ./next
+      target: /work/next
+    - type: volume
+      source: psysh-store
+      target: /root/.config/psysh
+      volume:
+        nocopy: true
+    tty: true
+    expose:
+      - 5000
+
+  api:
     build:
       context: .
       dockerfile: ./docker/php/Dockerfile
@@ -15,13 +33,17 @@ services:
         volume:
           nocopy: true
       - type: bind
-        source: ./backend
-        target: /work/backend
+        source: ./laravel
+        target: /work/laravel
       - type: volume
         source: psysh-store
         target: /root/.config/psysh
         volume:
           nocopy: true
+    tty: true
+    expose:
+      - 9000
+
     environment:
       - DB_CONNECTION=mysql
       - DB_HOST=db
@@ -35,29 +57,33 @@ services:
       context: .
       dockerfile: ./docker/nginx/Dockerfile
     ports:
-      - target: 80
-        published: ${WEB_PORT:-80}
-        protocol: tcp
-        mode: host
+      - 80:80
     volumes:
+      - type: bind
+        source: ./docker/nginx/default.conf
+        target: /etc/nginx/conf.d/default.conf
       - type: volume
         source: php-fpm-socket
         target: /var/run/php-fpm
         volume:
           nocopy: true
       - type: bind
-        source: ./backend
-        target: /work/backend
+        source: ./laravel
+        target: /work/laravel
+      - type: bind
+        source: ./next
+        target: /work/next
+    depends_on:
+      - next
+      - db
+      - api
 
   db:
     build:
       context: .
       dockerfile: ./docker/mysql/Dockerfile
     ports:
-      - target: 3306
-        published: ${DB_PORT:-3306}
-        protocol: tcp
-        mode: host
+      - 3306:3306
     volumes:
       - type: volume
         source: db-store
@@ -69,3 +95,4 @@ services:
       - MYSQL_USER=${DB_USER:-cocoa}
       - MYSQL_PASSWORD=${DB_PASS:-secret}
       - MYSQL_ROOT_PASSWORD=${DB_PASS:-secret}
+
