@@ -13,6 +13,3 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/la', function () {
-    return view('welcome');
-});
