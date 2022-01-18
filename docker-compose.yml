@@ -19,8 +19,6 @@ services:
       volume:
         nocopy: true
     tty: true
-    expose:
-      - 5000
 
   api:
     build:
@@ -41,8 +39,6 @@ services:
         volume:
           nocopy: true
     tty: true
-    expose:
-      - 9000
 
     environment:
       - DB_CONNECTION=mysql

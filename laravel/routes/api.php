@@ -2,8 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\StoreController;
-use App\Http\Controllers\Resources\StoreResource;
+// use App\Http\Controllers\StoreController;
+// use App\Http\Controllers\Resources\StoreResource;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,9 +16,11 @@ use App\Http\Controllers\Resources\StoreResource;
 |
 */
 
-Route::group(['middleware' => ['api']], function(){
-    Route::options('Store', function() {
-        return response()->json();
-    });
+// Route::group(['middleware' => ['api']], function(){
+    // Route::options('Store', function() {
+    //     return response()->json();
+    // });
+Route::prefix('laravel')->group(function () {
     Route::resource('Store', 'App\Http\Controllers\StoreController');
 });
+// });
