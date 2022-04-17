@@ -1,8 +1,8 @@
+import axios from "../libs/axios";
 import Header from "../layouts/Header";
 import Head from "next/head";
 import useSWR from 'swr';
 import Search from "../components/search";
-
 import ShopCard from "../components/ShopCard";
 
 export type json = {
@@ -16,15 +16,15 @@ export type json = {
 
 
 const Shop = () => {
-  const fetcher = (url:any) => fetch(url).then((res) => res.json());
+  const fetcher = (url:any) => axios.get('/api/laravel/Store').then((res) => res.data);
 
 
   const { data, error } = useSWR(
-    'http://localhost/api/laravel/Store',
+    '/api/laravel/Store',
     fetcher
   );
 
-  if (error) return <div>failed to load</div>;
+  if (error) return <div>ページの読み込みに失敗しました。</div>;
   if (!data) return <div className="text-center">読み込んでいます。。。</div>;
 
   return (

@@ -1,7 +1,7 @@
 import Axios from 'axios'
 
 const axios = Axios.create({
-    baseURL: 'http://localhost/api/laravel',
+    baseURL:  'http://localhost',
     headers: {
        'X-Requested-With': 'XMLHttpRequest',
     },

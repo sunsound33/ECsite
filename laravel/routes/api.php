@@ -23,4 +23,8 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('laravel')->group(function () {
     Route::resource('Store', 'App\Http\Controllers\StoreController');
 });
+
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
+});
 // });

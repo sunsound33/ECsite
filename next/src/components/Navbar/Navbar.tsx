@@ -65,7 +65,6 @@ const Navbar:NextPage = () => {
                   <a className="my-1 text-sm font-medium text-gray-700 transition-colors duration-200 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0" href="/about">About</a>
                 </Link>
               </div>
-            </div>
             <div className="flex md:block">
                 <a className="relative text-gray-700 transition-colors duration-200 transform dark:text-gray-200 hover:text-gray-600 dark:hover:text-gray-300" href="/cart">
                   <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -74,6 +73,7 @@ const Navbar:NextPage = () => {
                   <span className="absolute top-0 left-0 p-1 text-xs text-white bg-blue-500 rounded-full"></span>
                 </a>
               </div>
+            </div>
           </>) : false}
 
           <div className="items-center md:flex">
